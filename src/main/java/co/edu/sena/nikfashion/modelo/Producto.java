@@ -11,8 +11,14 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Entidad JPA que representa un producto (par de zapatos) de NikFashion.
@@ -35,12 +41,16 @@ public class Producto {
 
     /** Codigo unico del producto, ej. NK-AF1-001. */
     @NotBlank(message = "La referencia es obligatoria")
-    @Size(max = 20, message = "La referencia admite maximo 20 caracteres")
+    @Size(min = 5, max = 20, message = "La referencia debe tener entre 5 y 20 caracteres")
+    @Pattern(regexp = "^[A-Za-z0-9-]*$",
+            message = "La referencia solo admite letras, numeros y guiones (sin espacios ni caracteres especiales)")
     @Column(nullable = false, unique = true, length = 20)
     private String referencia;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 100, message = "El nombre admite maximo 100 caracteres")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Pattern(regexp = "^[\\p{L}0-9 .'-]*$",
+            message = "El nombre solo admite letras, numeros, espacios y los signos . ' -")
     @Column(nullable = false, length = 100)
     private String nombre;
 
@@ -55,20 +65,34 @@ public class Producto {
     private BigDecimal talla;
 
     @NotBlank(message = "El color es obligatorio")
-    @Size(max = 30, message = "El color admite maximo 30 caracteres")
+    @Size(min = 3, max = 30, message = "El color debe tener entre 3 y 30 caracteres")
+    @Pattern(regexp = "^[\\p{L} ]*$", message = "El color solo admite letras y espacios")
     @Column(nullable = false, length = 30)
     private String color;
 
     /** Se usa BigDecimal para manejar dinero sin errores de redondeo. */
     @NotNull(message = "El precio es obligatorio")
     @DecimalMin(value = "1", message = "El precio debe ser mayor a cero")
+    @DecimalMax(value = "20000000", message = "El precio maximo es $20.000.000")
+    @Digits(integer = 8, fraction = 0, message = "El precio debe ser un valor entero en pesos, sin decimales")
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal precio;
 
     @NotNull(message = "El stock es obligatorio")
     @Min(value = 0, message = "El stock no puede ser negativo")
+    @Max(value = 9999, message = "El stock maximo es 9999 unidades")
     @Column(nullable = false)
     private Integer stock;
+
+    /** Fecha en que el modelo salio al mercado. */
+    @NotNull(message = "La fecha de lanzamiento es obligatoria")
+    @PastOrPresent(message = "La fecha de lanzamiento no puede ser una fecha futura")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "fecha_lanzamiento")
+    private LocalDate fechaLanzamiento;
+
+    /** Fecha de fundacion de Nike: ningun modelo puede ser anterior. */
+    public static final LocalDate FECHA_FUNDACION_NIKE = LocalDate.of(1964, 1, 25);
 
     /** Constructor vacio requerido por JPA. */
     public Producto() {
@@ -92,6 +116,16 @@ public class Producto {
      */
     public boolean estaDisponible() {
         return stock != null && stock > 0;
+    }
+
+    /**
+     * Regla de negocio: la fecha de lanzamiento no puede ser anterior
+     * a la fundacion de Nike (25/01/1964).
+     *
+     * @return true si la fecha es anterior a la fundacion
+     */
+    public boolean esFechaAnteriorAFundacion() {
+        return fechaLanzamiento != null && fechaLanzamiento.isBefore(FECHA_FUNDACION_NIKE);
     }
 
     // ---------- Getters y setters ----------
@@ -144,7 +178,14 @@ public class Producto {
         this.color = color;
     }
 
+    /**
+     * Devuelve el precio sin decimales en cero (599900.00 → 599900)
+     * para mostrarlo limpio en los formularios.
+     */
     public BigDecimal getPrecio() {
+        if (precio != null && precio.scale() > 0 && precio.stripTrailingZeros().scale() <= 0) {
+            return precio.setScale(0);
+        }
         return precio;
     }
 
@@ -158,5 +199,13 @@ public class Producto {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public LocalDate getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
     }
 }

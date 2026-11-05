@@ -72,9 +72,21 @@ NikFashionSpring/
 | POST | `/productos/guardar` | Inserta o actualiza |
 | POST | `/productos/{id}/eliminar` | Elimina |
 
-## Reglas de negocio
-- La referencia es única y se guarda en mayúsculas.
-- Talla entre 30 y 50, precio mayor a cero y stock no negativo.
+## Reglas de negocio y validaciones
+| Campo | Validaciones |
+|-------|-------------|
+| Referencia | Obligatoria, 5 a 20 caracteres, solo letras/números/guiones, única, se guarda en mayúsculas |
+| Nombre | Obligatorio, 3 a 100 caracteres, solo letras, números, espacios y `. ' -` |
+| Categoría | Obligatoria (lista) |
+| Color | Obligatorio, 3 a 30 caracteres, solo letras y espacios |
+| Talla | Número entre 30 y 50 |
+| Precio | Número entero mayor a 0 y máximo $20.000.000 (sin decimales) |
+| Stock | Número entero entre 0 y 9999 |
+| Fecha de lanzamiento | Obligatoria, fecha válida, no futura y no anterior a la fundación de Nike (25/01/1964) |
+
+Si se escriben letras en un campo numérico o una fecha inválida se muestra un mensaje en español (`messages.properties`).
+
+Otras reglas:
 - El catálogo solo muestra productos con stock mayor a 0.
 - Los productos con 5 unidades o menos se marcan como **"Últimas unidades"** en el catálogo y en rojo en el panel.
 

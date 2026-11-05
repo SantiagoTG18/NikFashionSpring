@@ -36,6 +36,7 @@
                     <th>Color</th>
                     <th class="numero">Precio</th>
                     <th class="numero">Stock</th>
+                    <th>Lanzamiento</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -53,6 +54,7 @@
                         <span class="stock" th:classappend="${producto.tieneStockBajo()} ? 'stock--bajo'"
                               th:text="${producto.stock}">0</span>
                     </td>
+                    <td th:text="${producto.fechaLanzamiento != null} ? ${#temporals.format(producto.fechaLanzamiento, 'dd/MM/yyyy')} : '-'">01/01/2020</td>
                     <td class="acciones">
                         <a class="boton boton--pequeno" th:href="@{/productos/{id}/editar(id=${producto.idProducto})}">Editar</a>
                         <!-- Eliminar usa POST porque modifica datos -->

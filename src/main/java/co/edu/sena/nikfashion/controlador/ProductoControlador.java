@@ -91,6 +91,12 @@ public class ProductoControlador {
     public String guardarProducto(@Valid @ModelAttribute("producto") Producto producto,
                                   BindingResult resultado,
                                   RedirectAttributes redireccion) {
+        // Validacion de negocio adicional: fecha minima de lanzamiento
+        if (!resultado.hasFieldErrors("fechaLanzamiento") && producto.esFechaAnteriorAFundacion()) {
+            resultado.rejectValue("fechaLanzamiento", "anteriorFundacion",
+                    "La fecha no puede ser anterior a la fundacion de Nike (25/01/1964)");
+        }
+
         if (resultado.hasErrors()) {
             return VISTA_FORMULARIO;
         }
