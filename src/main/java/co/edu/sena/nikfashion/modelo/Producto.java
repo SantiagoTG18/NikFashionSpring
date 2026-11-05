@@ -15,7 +15,6 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,14 +40,14 @@ public class Producto {
 
     /** Codigo unico del producto, ej. NK-AF1-001. */
     @NotBlank(message = "La referencia es obligatoria")
-    @Size(min = 5, max = 20, message = "La referencia debe tener entre 5 y 20 caracteres")
+    @Pattern(regexp = "^(|.{5,20})$", message = "La referencia debe tener entre 5 y 20 caracteres")
     @Pattern(regexp = "^[A-Za-z0-9-]*$",
             message = "La referencia solo admite letras, numeros y guiones (sin espacios ni caracteres especiales)")
     @Column(nullable = false, unique = true, length = 20)
     private String referencia;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Pattern(regexp = "^(|.{3,100})$", message = "El nombre debe tener entre 3 y 100 caracteres")
     @Pattern(regexp = "^[\\p{L}0-9 .'-]*$",
             message = "El nombre solo admite letras, numeros, espacios y los signos . ' -")
     @Column(nullable = false, length = 100)
@@ -65,7 +64,7 @@ public class Producto {
     private BigDecimal talla;
 
     @NotBlank(message = "El color es obligatorio")
-    @Size(min = 3, max = 30, message = "El color debe tener entre 3 y 30 caracteres")
+    @Pattern(regexp = "^(|.{3,30})$", message = "El color debe tener entre 3 y 30 caracteres")
     @Pattern(regexp = "^[\\p{L} ]*$", message = "El color solo admite letras y espacios")
     @Column(nullable = false, length = 30)
     private String color;
