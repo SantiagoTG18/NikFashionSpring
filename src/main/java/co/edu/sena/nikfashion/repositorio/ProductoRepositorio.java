@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * {@code deleteById}, etc. Los metodos declarados aqui se convierten en
  * consultas SQL a partir de su nombre (query methods).</p>
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @Repository
 public interface ProductoRepositorio extends JpaRepository<Producto, Integer> {

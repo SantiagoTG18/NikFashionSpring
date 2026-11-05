@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Controlador del catalogo publico: lo que ve el cliente de la tienda.
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @Controller
 public class CatalogoControlador {

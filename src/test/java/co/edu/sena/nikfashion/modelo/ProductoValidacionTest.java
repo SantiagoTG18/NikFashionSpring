@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  * Pruebas unitarias de las validaciones de la entidad Producto.
  * No necesitan base de datos ni servidor: se ejecutan con "mvn test".
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @DisplayName("Validaciones de la entidad Producto")
 class ProductoValidacionTest {

@@ -26,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * Las anotaciones de validacion se revisan automaticamente cuando el
  * formulario llega al controlador con {@code @Valid}.</p>
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @Entity
 @Table(name = "producto")

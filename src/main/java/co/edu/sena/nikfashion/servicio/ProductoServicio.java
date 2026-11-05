@@ -7,7 +7,7 @@ import java.util.List;
  * Capa de servicio: contiene las reglas de negocio del modulo de productos.
  * Los controladores usan esta interfaz y no acceden directo al repositorio.
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 public interface ProductoServicio {
 

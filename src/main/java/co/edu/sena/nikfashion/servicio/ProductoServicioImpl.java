@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * {@code @Transactional} hace que cada operacion se ejecute dentro de
  * una transaccion de base de datos.</p>
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @Service
 @Transactional

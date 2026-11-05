@@ -126,8 +126,5 @@ El informe completo de pruebas (Word), el video y los pantallazos están en `doc
    - Por consola: `mvn spring-boot:run`
 3. Abrir **http://localhost:8081/**
 
-## Autores
-- Diego Alfonso Arenas Uscategui
-- Miller Leandro Portilla Chamorro
+## Autor
 - Santiago Torres García
-- Brallan Enrique Ariza Fandiño

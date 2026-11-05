@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * <p>Todas las rutas empiezan por {@code /productos}. Las consultas usan
  * GET y las operaciones que modifican datos usan POST.</p>
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @Controller
 @RequestMapping("/productos")

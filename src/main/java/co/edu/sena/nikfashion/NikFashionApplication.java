@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * automatica de Spring Boot y el escaneo de componentes (controladores,
  * servicios y repositorios) dentro del paquete {@code co.edu.sena.nikfashion}.</p>
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @SpringBootApplication
 public class NikFashionApplication {

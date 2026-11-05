@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  * Pruebas del controlador de productos con MockMvc.
  * El servicio se simula con Mockito, por lo que no se necesita base de datos.
  *
- * @author Equipo NikFashion - SENA ADSO
+ * @author Santiago Torres García
  */
 @WebMvcTest(ProductoControlador.class)
 @DisplayName("Controlador de productos (CRUD)")
