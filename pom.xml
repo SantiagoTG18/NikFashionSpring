@@ -54,6 +54,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Pruebas automatizadas: JUnit 5, Mockito y MockMvc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Recarga automatica durante el desarrollo -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -40,7 +40,8 @@ MySQL  (tabla producto)  ◄──►  Modelo / Entidad (Producto)
 NikFashionSpring/
 ├── pom.xml
 ├── database/nikfashion.sql
-├── capturas/
+├── docs/pruebas/                           -> informe Word, video y pantallazos de las pruebas
+├── src/test/                               -> pruebas automatizadas (JUnit 5 + MockMvc)
 └── src/main/
     ├── java/co/edu/sena/nikfashion/
     │   ├── NikFashionApplication.java          -> clase principal
@@ -111,6 +112,13 @@ Otras reglas:
 | 7 | Registrar referencia repetida (nk-af1-001) | ✔ "Ya existe un producto con la referencia NK-AF1-001" |
 | 8 | Eliminar producto | ✔ "Producto eliminado correctamente." (ya no está en la BD) |
 | 9 | Editar un ID inexistente (999) | ✔ "No existe un producto con ID 999" |
+
+## Pruebas automatizadas
+`mvn test` ejecuta **42 pruebas** (no requieren base de datos):
+- `ProductoValidacionTest` (31): textos, caracteres especiales, longitudes, números, rangos, valores límite y fechas.
+- `ProductoControladorTest` (11): flujo CRUD del controlador con MockMvc y Mockito.
+
+El informe completo de pruebas (Word), el video y los pantallazos están en `docs/pruebas/`.
 
 ## Cómo ejecutarlo
 1. Encender **MySQL** en XAMPP y ejecutar `database/nikfashion.sql` en phpMyAdmin.
