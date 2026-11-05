@@ -1,0 +1,139 @@
+/* =========================================================
+   NikFashion - Hoja de estilos
+   ========================================================= */
+
+/* ---------- Variables de color ---------- */
+:root {
+    --negro: #111111;
+    --gris-oscuro: #3a3a3a;
+    --gris: #757575;
+    --gris-claro: #e5e5e5;
+    --fondo: #f5f5f5;
+    --blanco: #ffffff;
+    --naranja: #fa5400;
+    --verde: #128a09;
+    --rojo: #d43f21;
+    --radio: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--negro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main { flex: 1; }
+main.contenedor { padding-top: 32px; padding-bottom: 48px; }
+
+.contenedor { width: 100%; max-width: 1150px; margin: 0 auto; padding: 0 16px; }
+.contenedor--angosto { max-width: 720px; }
+
+/* ---------- Encabezado ---------- */
+.encabezado { background: var(--negro); color: var(--blanco); }
+.encabezado__contenido { display: flex; align-items: center; gap: 28px; min-height: 64px; flex-wrap: wrap; }
+.logo { color: var(--blanco); font-weight: 900; font-size: 22px; letter-spacing: 1px; text-decoration: none; }
+.logo span { color: var(--naranja); }
+.menu { display: flex; gap: 20px; flex-wrap: wrap; }
+.menu a { color: #b5b5b5; text-decoration: none; font-size: 14px; padding: 4px 0; border-bottom: 2px solid transparent; }
+.menu a:hover, .menu a.activo { color: var(--blanco); border-bottom-color: var(--naranja); }
+
+/* ---------- Banner del catalogo ---------- */
+.banner { background: linear-gradient(120deg, #1b1b1b 0%, #2e2e2e 60%, #fa5400 160%); color: var(--blanco); padding: 56px 0; }
+.banner__etiqueta { color: var(--naranja); font-weight: bold; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin: 0 0 8px; }
+.banner__titulo { font-size: 44px; margin: 0 0 10px; line-height: 1.1; }
+.banner__texto { color: #cfcfcf; margin: 0; }
+
+/* ---------- Filtros ---------- */
+.filtros { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+.chip { padding: 8px 18px; border-radius: 999px; border: 1px solid var(--gris-claro); background: var(--blanco); color: var(--negro); text-decoration: none; font-size: 14px; }
+.chip:hover { border-color: var(--negro); }
+.chip--activo { background: var(--negro); color: var(--blanco); border-color: var(--negro); }
+
+/* ---------- Tarjetas de producto ---------- */
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.tarjeta { background: var(--blanco); border-radius: var(--radio); overflow: hidden; transition: transform .15s, box-shadow .15s; }
+.tarjeta:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.08); }
+.tarjeta__imagen { position: relative; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; background: #ececec; }
+.tarjeta__imagen svg { width: 70%; fill: var(--negro); }
+.tarjeta__imagen svg .suela { fill: var(--blanco); }
+.cat-casual   { background: #ececec; }
+.cat-running  { background: #dbe8f7; }
+.cat-futbol   { background: #dff1dc; }
+.cat-basket   { background: #fde3d6; }
+.cat-training { background: #ece3f6; }
+.tarjeta__stock { position: absolute; top: 12px; left: 12px; background: var(--blanco); color: var(--rojo); font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 999px; }
+.tarjeta__cuerpo { padding: 16px; }
+.tarjeta__categoria { color: var(--naranja); font-size: 12px; font-weight: bold; text-transform: uppercase; margin: 0 0 4px; }
+.tarjeta__nombre { font-size: 17px; margin: 0 0 6px; }
+.tarjeta__detalle { color: var(--gris); font-size: 14px; margin: 0 0 10px; }
+.tarjeta__precio { font-size: 18px; font-weight: bold; margin: 0; }
+
+/* ---------- Titulos ---------- */
+h1 { font-size: 28px; margin: 0 0 20px; }
+.titulo-seccion { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.titulo-seccion h1 { margin: 0; }
+
+/* ---------- Botones ---------- */
+.boton {
+    display: inline-block; border: 1px solid var(--negro); background: var(--blanco); color: var(--negro);
+    padding: 10px 20px; border-radius: 999px; font-size: 14px; cursor: pointer; text-decoration: none; font-family: inherit;
+}
+.boton:hover { background: var(--gris-claro); }
+.boton--primario { background: var(--negro); color: var(--blanco); }
+.boton--primario:hover { background: var(--gris-oscuro); }
+.boton--secundario { border-color: var(--gris-claro); }
+.boton--peligro { border-color: var(--rojo); color: var(--rojo); }
+.boton--peligro:hover { background: var(--rojo); color: var(--blanco); }
+.boton--pequeno { padding: 6px 14px; font-size: 13px; }
+
+/* ---------- Alertas ---------- */
+.alerta { padding: 14px 18px; border-radius: var(--radio); margin-bottom: 20px; border-left: 4px solid; background: var(--blanco); }
+.alerta--exito { border-color: var(--verde); color: var(--verde); }
+.alerta--error { border-color: var(--rojo); color: var(--rojo); }
+
+/* ---------- Busqueda ---------- */
+.busqueda { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.busqueda input { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid var(--gris-claro); border-radius: 999px; font-size: 14px; }
+.resumen, .vacio { color: var(--gris); font-size: 14px; }
+
+/* ---------- Tabla ---------- */
+.tabla-contenedor { overflow-x: auto; background: var(--blanco); border-radius: var(--radio); }
+.tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla th, .tabla td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--gris-claro); white-space: nowrap; }
+.tabla th { font-size: 12px; text-transform: uppercase; color: var(--gris); letter-spacing: .5px; }
+.tabla tbody tr:hover { background: #fafafa; }
+.numero { text-align: right !important; font-variant-numeric: tabular-nums; }
+.acciones { display: flex; gap: 8px; }
+.acciones form { margin: 0; }
+.stock { display: inline-block; min-width: 32px; padding: 2px 8px; border-radius: 999px; background: var(--fondo); text-align: center; }
+.stock--bajo { background: #fde7e0; color: var(--rojo); font-weight: bold; }
+
+/* ---------- Formulario ---------- */
+.formulario { background: var(--blanco); padding: 28px; border-radius: var(--radio); }
+.fila { display: flex; gap: 16px; flex-wrap: wrap; }
+.fila .campo { flex: 1; min-width: 150px; }
+.campo { margin-bottom: 18px; }
+.campo label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+.campo input, .campo select {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--gris-claro); border-radius: var(--radio);
+    font-size: 15px; font-family: inherit; background: var(--blanco);
+}
+.campo input:focus, .campo select:focus { outline: 2px solid var(--negro); border-color: transparent; }
+.campo .invalido { border-color: var(--rojo); }
+.error { display: block; color: var(--rojo); font-size: 13px; margin-top: 5px; }
+.botones { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+
+/* ---------- Pie ---------- */
+.pie { background: var(--negro); color: var(--gris); font-size: 13px; padding: 18px 0; text-align: center; }
+
+/* ---------- Celulares ---------- */
+@media (max-width: 600px) {
+    .banner__titulo { font-size: 32px; }
+    .formulario { padding: 20px; }
+}

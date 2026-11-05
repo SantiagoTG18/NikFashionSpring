@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Catalogo publico de la tienda: tarjetas con los zapatos disponibles -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/plantilla :: head('Catalogo')}"></head>
+<body>
+<header th:replace="~{fragmentos/plantilla :: encabezado('catalogo')}"></header>
+
+<!-- Banner principal -->
+<section class="banner">
+    <div class="contenedor">
+        <p class="banner__etiqueta">Nueva coleccion</p>
+        <h1 class="banner__titulo">Encuentra tu par ideal</h1>
+        <p class="banner__texto">Calzado Nike original para correr, entrenar o salir.</p>
+    </div>
+</section>
+
+<main class="contenedor">
+    <!-- Filtro por categoria: cada boton envia ?categoria=... por GET -->
+    <nav class="filtros">
+        <a th:href="@{/}" class="chip" th:classappend="${categoriaSeleccionada == null or categoriaSeleccionada.isEmpty()} ? 'chip--activo'">Todos</a>
+        <a th:each="categoria : ${categorias}"
+           th:href="@{/(categoria=${categoria})}"
+           th:text="${categoria}"
+           class="chip"
+           th:classappend="${categoria == categoriaSeleccionada} ? 'chip--activo'">Categoria</a>
+    </nav>
+
+    <p class="vacio" th:if="${#lists.isEmpty(productos)}">No hay productos disponibles en esta categoria.</p>
+
+    <!-- Una tarjeta por cada producto -->
+    <div class="tarjetas">
+        <article class="tarjeta" th:each="producto : ${productos}">
+            <!-- El color de fondo cambia segun la categoria -->
+            <div class="tarjeta__imagen" th:classappend="'cat-' + ${#strings.toLowerCase(producto.categoria)}">
+                <svg viewBox="0 0 120 60" aria-hidden="true">
+                    <path d="M8 44 C8 30 20 28 34 26 L52 12 C56 9 62 10 64 14 L70 24 C84 26 104 30 112 38 C116 42 114 48 108 48 L14 48 C10 48 8 47 8 44 Z"/>
+                    <path class="suela" d="M8 46 L112 46 L110 52 L10 52 Z"/>
+                </svg>
+                <span class="tarjeta__stock" th:if="${producto.tieneStockBajo()}">Ultimas unidades</span>
+            </div>
+            <div class="tarjeta__cuerpo">
+                <p class="tarjeta__categoria" th:text="${producto.categoria}">Categoria</p>
+                <h2 class="tarjeta__nombre" th:text="${producto.nombre}">Nombre</h2>
+                <p class="tarjeta__detalle">
+                    Talla <span th:text="${producto.talla.stripTrailingZeros().toPlainString()}">40</span>
+                    &middot; <span th:text="${producto.color}">Color</span>
+                </p>
+                <!-- Precio con separador de miles: 549.900 -->
+                <p class="tarjeta__precio" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 'POINT', 0, 'COMMA')}">$0</p>
+            </div>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{fragmentos/plantilla :: pie}"></footer>
+</body>
+</html>

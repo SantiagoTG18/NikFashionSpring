@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- Formulario para registrar o editar un producto -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/plantilla :: head(${producto.idProducto == null} ? 'Nuevo producto' : 'Editar producto')}"></head>
+<body>
+<header th:replace="~{fragmentos/plantilla :: encabezado(${producto.idProducto == null} ? 'nuevo' : 'admin')}"></header>
+
+<main class="contenedor contenedor--angosto contenido">
+    <h1 th:text="${producto.idProducto == null} ? 'Registrar nuevo producto' : 'Editar producto'">Producto</h1>
+
+    <!--
+        th:object enlaza el formulario con el objeto "producto".
+        th:field="*{campo}" llena el name, id y value de cada input.
+        Los errores de validacion se muestran con th:errors.
+    -->
+    <form class="formulario" th:action="@{/productos/guardar}" th:object="${producto}" method="post" novalidate>
+        <!-- El ID oculto distingue entre registrar (vacio) y actualizar -->
+        <input type="hidden" th:field="*{idProducto}">
+
+        <div class="campo">
+            <label for="referencia">Referencia</label>
+            <input type="text" th:field="*{referencia}" maxlength="20" placeholder="NK-AF1-010"
+                   th:classappend="${#fields.hasErrors('referencia')} ? 'invalido'">
+            <small class="error" th:if="${#fields.hasErrors('referencia')}" th:errors="*{referencia}"></small>
+        </div>
+
+        <div class="campo">
+            <label for="nombre">Nombre del producto</label>
+            <input type="text" th:field="*{nombre}" maxlength="100" placeholder="Nike Air Force 1"
+                   th:classappend="${#fields.hasErrors('nombre')} ? 'invalido'">
+            <small class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+        </div>
+
+        <div class="fila">
+            <div class="campo">
+                <label for="categoria">Categoria</label>
+                <select th:field="*{categoria}" th:classappend="${#fields.hasErrors('categoria')} ? 'invalido'">
+                    <option value="">Seleccione...</option>
+                    <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
+                </select>
+                <small class="error" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
+            </div>
+            <div class="campo">
+                <label for="color">Color</label>
+                <input type="text" th:field="*{color}" maxlength="30"
+                       th:classappend="${#fields.hasErrors('color')} ? 'invalido'">
+                <small class="error" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></small>
+            </div>
+        </div>
+
+        <div class="fila">
+            <div class="campo">
+                <label for="talla">Talla</label>
+                <input type="number" th:field="*{talla}" min="30" max="50" step="0.5"
+                       th:classappend="${#fields.hasErrors('talla')} ? 'invalido'">
+                <small class="error" th:if="${#fields.hasErrors('talla')}" th:errors="*{talla}"></small>
+            </div>
+            <div class="campo">
+                <label for="precio">Precio (COP)</label>
+                <input type="number" th:field="*{precio}" min="1" step="100"
+                       th:classappend="${#fields.hasErrors('precio')} ? 'invalido'">
+                <small class="error" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></small>
+            </div>
+            <div class="campo">
+                <label for="stock">Stock</label>
+                <input type="number" th:field="*{stock}" min="0" step="1"
+                       th:classappend="${#fields.hasErrors('stock')} ? 'invalido'">
+                <small class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
+            </div>
+        </div>
+
+        <div class="botones">
+            <a class="boton boton--secundario" th:href="@{/productos}">Cancelar</a>
+            <button type="submit" class="boton boton--primario"
+                    th:text="${producto.idProducto == null} ? 'Registrar producto' : 'Guardar cambios'">Guardar</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragmentos/plantilla :: pie}"></footer>
+</body>
+</html>

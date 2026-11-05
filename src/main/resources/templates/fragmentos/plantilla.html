@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+    Fragmentos reutilizables de Thymeleaf.
+    Cada pagina los inserta con th:replace="~{fragmentos/plantilla :: nombre}".
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Cabecera HTML comun: recibe el titulo de la pagina como parametro -->
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' | NikFashion'">NikFashion</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+
+<!-- Barra de navegacion: "activo" indica que opcion resaltar -->
+<header class="encabezado" th:fragment="encabezado(activo)">
+    <div class="contenedor encabezado__contenido">
+        <a class="logo" th:href="@{/}">NIK<span>FASHION</span></a>
+        <nav class="menu">
+            <a th:href="@{/}" th:classappend="${activo == 'catalogo'} ? 'activo'">Catalogo</a>
+            <a th:href="@{/productos}" th:classappend="${activo == 'admin'} ? 'activo'">Administrar</a>
+            <a th:href="@{/productos/nuevo}" th:classappend="${activo == 'nuevo'} ? 'activo'">Nuevo producto</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Mensajes flash que envia el controlador despues de una redireccion -->
+<div th:fragment="alertas">
+    <div class="alerta alerta--exito" th:if="${exito}" th:text="${exito}"></div>
+    <div class="alerta alerta--error" th:if="${error}" th:text="${error}"></div>
+</div>
+
+<!-- Pie de pagina -->
+<footer class="pie" th:fragment="pie">
+    <div class="contenedor">
+        NikFashion &middot; Construido con Spring Boot &middot; SENA - Analisis y Desarrollo de Software
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- Panel de administracion: tabla de productos con acciones CRUD -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/plantilla :: head('Administrar productos')}"></head>
+<body>
+<header th:replace="~{fragmentos/plantilla :: encabezado('admin')}"></header>
+
+<main class="contenedor contenido">
+    <div class="titulo-seccion">
+        <h1>Inventario de calzado</h1>
+        <a class="boton boton--primario" th:href="@{/productos/nuevo}">+ Nuevo producto</a>
+    </div>
+
+    <div th:replace="~{fragmentos/plantilla :: alertas}"></div>
+
+    <!-- Busqueda por nombre (GET) -->
+    <form class="busqueda" th:action="@{/productos}" method="get">
+        <input type="search" name="buscar" placeholder="Buscar por nombre, ej. Air Max" th:value="${buscar}">
+        <button type="submit" class="boton">Buscar</button>
+        <a class="boton boton--secundario" th:if="${buscar != null and !buscar.isEmpty()}" th:href="@{/productos}">Limpiar</a>
+    </form>
+
+    <p class="vacio" th:if="${#lists.isEmpty(productos)}">No se encontraron productos.</p>
+
+    <th:block th:unless="${#lists.isEmpty(productos)}">
+        <p class="resumen" th:text="${#lists.size(productos)} + ' producto(s) encontrados'">0</p>
+        <div class="tabla-contenedor">
+            <table class="tabla">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Referencia</th>
+                    <th>Nombre</th>
+                    <th>Categoria</th>
+                    <th>Talla</th>
+                    <th>Color</th>
+                    <th class="numero">Precio</th>
+                    <th class="numero">Stock</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- th:each recorre la lista que envia el controlador -->
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.idProducto}">1</td>
+                    <td th:text="${producto.referencia}">REF</td>
+                    <td th:text="${producto.nombre}">Nombre</td>
+                    <td th:text="${producto.categoria}">Categoria</td>
+                    <td th:text="${producto.talla.stripTrailingZeros().toPlainString()}">40</td>
+                    <td th:text="${producto.color}">Color</td>
+                    <td class="numero" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 'POINT', 0, 'COMMA')}">$0</td>
+                    <td class="numero">
+                        <span class="stock" th:classappend="${producto.tieneStockBajo()} ? 'stock--bajo'"
+                              th:text="${producto.stock}">0</span>
+                    </td>
+                    <td class="acciones">
+                        <a class="boton boton--pequeno" th:href="@{/productos/{id}/editar(id=${producto.idProducto})}">Editar</a>
+                        <!-- Eliminar usa POST porque modifica datos -->
+                        <form th:action="@{/productos/{id}/eliminar(id=${producto.idProducto})}" method="post"
+                              onsubmit="return confirm('Desea eliminar este producto?');">
+                            <button type="submit" class="boton boton--pequeno boton--peligro">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </th:block>
+</main>
+
+<footer th:replace="~{fragmentos/plantilla :: pie}"></footer>
+</body>
+</html>
